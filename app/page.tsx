@@ -1,23 +1,22 @@
 'use client';
 
-interface Motor { id: number; name: string; price: number; }
-
-const LIST: Motor[] = [
-  { id: 1, name: "Vario 160", price: 150000 },
-  { id: 2, name: "NMAX 155", price: 180000 },
-];
+import { useState } from "react";
 
 export default function Page() {
-  const handleClick = (name: string) => alert ("Choose: " + name);
+  const [today, setToday] = useState<number>(1);
+  const price = 10000;
 
   return (
-    <div className="p-8 space-y-3">
-      {LIST.map((motor) => (
-        <div key={motor.id} className="border p-3 rounded flex justify-between items-center">
-          <span>{motor.name} - Rp {motor.price.toLocaleString()}</span>
-          <button onClick={() => handleClick(motor.name)} className="bg-blue-600 text-white px-3 py-1">Choose</button>
-        </div>
-      ))}
+    <div className="p-8 space-y-4 max-w-sm">
+      <label className="block text-sm">Rent Duration (Days):</label>
+      <input 
+        type="number"
+        min={1}
+        value={today}
+        onChange={(e) => setToday(Number(e.target.value))}
+        className="border rounded px-2 py-1 w-full"
+      />
+      <p className="font-bold text-lg">Total Price: Rp {(price * today).toLocaleString()}</p>
     </div>
   )
 }
